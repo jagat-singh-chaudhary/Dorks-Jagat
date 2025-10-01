@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dork Jagat</title>
+    <style>
+        /* CSS Variables for Theming */
+        :root {
+            --bg-color: #f4f7f9;
+            --container-bg: #ffffff;
+            --text-color: #444;
+            --heading-color: #d9534f;
+            --primary-color: #0275d8;
+            --secondary-heading-color: #0275d8;
+            --link-color: #337ab7;
+            --border-color: #e7e7e7;
+            --input-bg: #fff;
+            --input-border: #ccc;
+            --button-bg: #5cb85c;
+            --button-hover-bg: #4cae4c;
+            --shadow: 0 4px 12px rgba(0,0,0,0.1);
+            --switch-bg: #ccc;
+            --switch-slider: white;
+        }
+
+        body.dark-mode {
+            --bg-color: #121212;
+            --container-bg: #1e1e1e;
+            --text-color: #e0e0e0;
+            --heading-color: #f27c7c;
+            --primary-color: #58a6ff;
+            --secondary-heading-color: #58a6ff;
+            --link-color: #58a6ff;
+            --border-color: #333;
+            --input-bg: #2d2d2d;
+            --input-border: #444;
+            --button-bg: #238636;
+            --button-hover-bg: #2ea043;
+            --shadow: 0 4px 15px rgba(0,0,0,0.3);
+            --switch-bg: #555;
+            --switch-slider: #333;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: auto;
+            background-color: var(--container-bg);
+            padding: 25px 35px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            color: var(--heading-color);
+            margin: 0;
+        }
+
+        .input-area {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        #domainInput {
+            flex-grow: 1;
+            padding: 12px;
+            border: 1px solid var(--input-border);
+            border-radius: 6px;
+            font-size: 16px;
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        #applyButton {
+            padding: 12px 22px;
+            background-color: var(--button-bg);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+
+        #applyButton:hover {
+            background-color: var(--button-hover-bg);
+        }
+
+        #dorksContainer {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 25px;
+        }
+
+        .dork-category {
+            background-color: var(--container-bg);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .dork-category h2 {
+            font-size: 20px;
+            color: var(--secondary-heading-color);
+            margin-top: 0;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .dork-category ul { list-style-type: none; padding: 0; margin: 0; }
+        .dork-category li { margin-bottom: 12px; word-wrap: break-word; }
+        .dork-category a { text-decoration: none; color: var(--link-color); font-size: 15px; }
+        .dork-category a:hover { text-decoration: underline; }
+
+        /* Theme Switcher Styles */
+        .theme-switcher { position: relative; display: inline-block; width: 50px; height: 28px; }
+        .theme-switcher input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--switch-bg); transition: .4s; border-radius: 34px; }
+        .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: var(--switch-slider); transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--primary-color); }
+        input:checked + .slider:before { transform: translateX(22px); }
+
+        /* Footer Styles */
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            color: #888;
+        }
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--link-color);
+            font-weight: 500;
+        }
+        .social-links svg {
+            fill: currentColor;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Dorks Jagat</h1>
+            <label class="theme-switcher">
+                <input type="checkbox" id="themeToggle">
+                <span class="slider"></span>
+            </label>
+        </header>
+        
+        <div class="input-area">
+            <input type="text" id="domainInput" placeholder="example.com" autofocus>
+            <button id="applyButton">Apply</button>
+        </div>
+        
+        <div id="dorksContainer"></div>
+    </div>
+
+    <footer>
+        <p>© Dorks Jagat 2025 — All rights reserved. Built for bug bounty hunters. Use ethically.</p> <div class="social-links">
+            <a href="https://www.linkedin.com/in/jagat-singh-b824701b8/" target="_blank" title="LinkedIn"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"></path>
+                </svg>
+                LinkedIn
+            </a>
+        </div>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const domainInput = document.getElementById('domainInput');
+            const applyButton = document.getElementById('applyButton');
+            const dorksContainer = document.getElementById('dorksContainer');
+            const themeToggle = document.getElementById('themeToggle');
+
+            // --- Theme Switcher Logic ---
+            const currentTheme = localStorage.getItem('theme');
+            if (currentTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                themeToggle.checked = true;
+            }
+
+            themeToggle.addEventListener('change', () => {
+                if (themeToggle.checked) {
+                    document.body.classList.add('dark-mode');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+
+            // --- Dorks Data ---
+            const dorks = {
+                "Surface Discovery": [
+                    "site:[TARGET] ext:xml | ext:conf | ext:cnf | ext:reg | ext:inf | ext:rdp | ext:cfg | ext:txt | ext:ora | ext:ini",
+                    "site:[TARGET] ext:sql | ext:dbf | ext:mdb",
+                    "site:[TARGET] ext:bkf | ext:bkp | ext:bak | ext:old | ext:backup",
+                    'site:[TARGET] inurl:"/.git" -github.com',
+                    "site:[TARGET] ext:doc | ext:docx | ext:odt | ext:pdf | ext:rtf | ext:sxw | ext:psw | ext:ppt | ext:pptx | ext:pps | ext:csv",
+                    'site:[TARGET] intext:"sql syntax near" | intext:"syntax error has occurred" | intext:"incorrect syntax near"',
+                    'site:[TARGET] "PHP Parse error" | "PHP Warning" | "PHP Error"',
+                    'site:[TARGET] "Fatal error: "*"',
+                    "site:[TARGET] inurl:login | inurl:signin | intitle:Login | intitle:Sign in | inurl:auth",
+                    "site:[TARGET] inurl:redir | inurl:url | inurl:redirect | inurl:return | inurl:src=http | inurl:r=http"
+                ],
+                "Log Files & Credentials": [
+                    "site:[TARGET] ext:log",
+                    'site:[TARGET] inurl:admin | inurl:login',
+                    'site:[TARGET] intitle:"index of /" backup | "Index of /" "backup.tar"',
+                    'site:[TARGET] inurl:"/phpinfo.php" | inurl:".bash_history" | inurl:".sh_history"',
+                    "site:[TARGET] ext:log | ext:txt intext:password",
+                    'site:[TARGET] inurl:/passwd|/etc/passwd',
+                    'site:[TARGET] filetype:env DB_PASSWORD',
+                    'site:[TARGET] filetype:ini "username"',
+                    'site:[TARGET] filetype:ini "password"',
+                ],
+                "Vulnerability & Config Files": [
+                    "site:[TARGET] inurl:struts",
+                    "site:[TARGET] ext:action | ext:struts | ext:do",
+                    "site:[TARGET] inurl:wp-content | inurl:wp-includes",
+                    'site:[TARGET] inurl:"/wp-admin/setup-config.php"',
+                    "site:[TARGET] inurl:id= | inurl:pid= | inurl:category= | inurl:cat= | inurl:action= | inurl:pageid=",
+                    'site:[TARGET] inurl:/.env',
+                    'site:[TARGET] filetype:config',
+                    'site:[TARGET] filetype:xml config',
+                    "site:[TARGET] ext:pem | ext:ppk | ext:key | ext:cer | ext:der | ext:p12 | ext:pfx | ext:jks",
+                    'site:[TARGET] inurl:"/sitemap.xml" | inurl:"/robots.txt" ext:xml | ext:txt',
+                ],
+                "Public Cloud Buckets": [
+                    'site:s3.amazonaws.com "[TARGET]"',
+                    'site:blob.core.windows.net inurl:[TARGET]',
+                    'site:storage.googleapis.com inurl:[TARGET]',
+                    'site:digitaloceanspaces.com inurl:[TARGET]',
+                    'site:s3.amazonaws.com filetype:csv | filetype:txt | filetype:pdf intext:"[TARGET]"'
+                ],
+                "Third-Party Services": [
+                    'inurl:trello.com AND intext:[TARGET]',
+                    'inurl:trello.com AND intext:password AND intext:[TARGET]',
+                    'inurl:http://zoom.us/j/ intext:[TARGET]',
+                    'site:*.s-[TARGET].com intitle:"CipherMail Email Encryption Gateway Login"',
+                    'site:sharepoint.com "[TARGET]"',
+                    'site:dropbox.com/[TARGET]',
+                    'site:docs.google.com inurl:"/d/" "[TARGET]"',
+                    'site:[TARGET] intitle:"Dashboard" intext:"Atlassian Jira Project Management Software"',
+                    'site:linkedin.com employees [TARGET]'
+                ],
+                "Git & Microsoft Groups": [
+                    'site:github.com "[TARGET]" "config"',
+                    'site:gitlab.com "[TARGET]" "config"',
+                    'site:groups.google.com filetype:txt inurl:[TARGET] "password"',
+                    'site:groups.google.com filetype:ini inurl:[TARGET] "aws_access_key_id"'
+                ]
+            };
+
+            // --- Dork Rendering Logic ---
+            function renderDorks() {
+                dorksContainer.innerHTML = '';
+                const domain = domainInput.value.trim();
+
+                if (!domain) {
+                    dorksContainer.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; font-size: 1.1em;">Enter a domain name in the box above and click "Apply".</p>';
+                    return;
+                }
+
+                for (const category in dorks) {
+                    const categoryDiv = document.createElement('div');
+                    categoryDiv.className = 'dork-category';
+                    
+                    const title = document.createElement('h2');
+                    title.textContent = category;
+                    categoryDiv.appendChild(title);
+                    
+                    const ul = document.createElement('ul');
+                    dorks[category].forEach(dorkTemplate => {
+                        const li = document.createElement('li');
+                        const finalDork = dorkTemplate.replace(/\[TARGET\]/g, domain);
+                        const url = `https://www.google.com/search?q=${encodeURIComponent(finalDork)}`;
+                        
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.target = '_blank';
+                        a.rel = 'noopener noreferrer';
+                        a.textContent = finalDork;
+                        li.appendChild(a);
+                        ul.appendChild(li);
+                    });
+                    
+                    categoryDiv.appendChild(ul);
+                    dorksContainer.appendChild(categoryDiv);
+                }
+            }
+
+            applyButton.addEventListener('click', renderDorks);
+            domainInput.addEventListener('keyup', (event) => {
+                if (event.key === 'Enter') {
+                    renderDorks();
+                }
+            });
+
+            // Initial message
+            renderDorks();
+        });
+    </script>
+
+</body>
+</html>
